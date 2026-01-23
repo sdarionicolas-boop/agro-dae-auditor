@@ -91,29 +91,17 @@ El modelo actúa como una **capa de auditoría previa**, evaluando la confiabili
 antes de que sean utilizados en análisis productivos o modelos predictivos.
 
 
-┌────────────────────┐
-│ NDVI / NDMI crudo  │
-│ Variables climáticas│
-│ Calidad de captura │
-└─────────┬──────────┘
-          ↓
-┌────────────────────┐
-│ Denoising          │
-│ Autoencoder (LSTM) │
-└─────────┬──────────┘
-          ↓
-┌────────────────────┐
-│ Score de anomalía  │
-│ (error de reconstr.)│
-└─────────┬──────────┘
-          ↓
-┌────────────────────┐
-│ Serie auditada     │
-│ (dato confiable)   │
-└─────────┬──────────┘
-          ↓
-┌────────────────────┐
-│ KVPI / RF / Otros  │
-│ modelos            │
-└────────────────────┘
+```text
+NDVI / NDMI crudo + variables climáticas
+                ↓
+      Auditoría DL (DAE – LSTM)
+                ↓
+      Score de anomalía temporal
+                ↓
+Dato confiable       |       Dato sospechoso
+                ↓
+     Serie temporal auditada
+                ↓
+ Modelos productivos / análisis posteriores
+
 
